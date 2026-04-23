@@ -1,11 +1,9 @@
-package com.senai.carteirinhadigital
+package com.senai.carteirinhadigital.feature.auth.presentation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -17,18 +15,26 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.senai.carteirinhadigital.ui.theme.CarteirinhaDigitalTheme
+import com.senai.carteirinhadigital.R
+import com.senai.carteirinhadigital.core.designsystem.theme.CarteirinhaDigitalTheme
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier,
+                onLoginClick: () -> Unit = {},
+                ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.senai),
+            contentDescription = null,
+        )
+
         Text("Login")
         TextField(
             value = "",
@@ -41,16 +47,20 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             label = { Text("senha") },
         )
         Button(
-            onClick = {},
+            onClick = onLoginClick,
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             modifier = Modifier
                 .width(200.dp),
-            shape = RoundedCornerShape(size = 2.dp)
+            shape = RoundedCornerShape(size = 2.dp),
+            border = BorderStroke(
+                width = 4.dp,
+                color = MaterialTheme.colorScheme.primary
+            )
         ){
-            Text("Enter")
+            Text("Entrar")
         }
     }
 }
@@ -66,4 +76,3 @@ fun LoginScreenPreview() {
     }
 
 }
-

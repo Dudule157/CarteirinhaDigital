@@ -31,8 +31,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = VERSION_11
-        targetCompatibility = VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
         compose = true
@@ -59,5 +59,5 @@ dependencies {
 
     implementation(libs.zxing.core)
     implementation(libs.androidx.compose.ui.text.google.fonts)
-    implementation("androidx.navigation:navigation-compose:2.8.0-beta02")
+    implementation("androidx.navigation:navigation-compose:2.9.8")
 }
