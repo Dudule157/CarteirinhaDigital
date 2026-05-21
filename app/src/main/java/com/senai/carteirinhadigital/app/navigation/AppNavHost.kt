@@ -5,7 +5,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.senai.carteirinhadigital.feature.auth.navigation.authScreen
 import com.senai.carteirinhadigital.feature.carteirinha.navigation.carteirinhaScreen
-import com.senai.carteirinhadigital.feature.carteirinha.presentation.CarteirinhaScreen
 
 @Composable
 fun AppNavHost() {
