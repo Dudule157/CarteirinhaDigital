@@ -67,7 +67,7 @@ fun LoginScreen(modifier: Modifier = Modifier,
         Button(
             onClick = {
                 if (login == "eduardo" && senha == "1234")   {
-                    navController.navigate(Routes.Carteirinha)
+                    navController.navigate(Routes.HomeScreen)
                     erroLogin = false
                     erroSenha = false
             } else if(senha != "1234") {
