@@ -10,5 +10,7 @@ fun NavGraphBuilder.carteirinhaScreen(
 ) {
     composable (Routes.Carteirinha) {
         CarteirinhaScreen(
-        onBackClick = onNavigateToLogin) }
+        onBackClick = onNavigateToLogin
+        )
+    }
 }

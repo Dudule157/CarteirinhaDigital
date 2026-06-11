@@ -67,7 +67,7 @@ fun LoginScreen(modifier: Modifier = Modifier,
         Button(
             onClick = {
                 if (login == "eduardo" && senha == "1234")   {
-                    navController.navigate(Routes.HomeScreen)
+                    navController.navigate(Routes.Home)
                     erroLogin = false
                     erroSenha = false
             } else if(senha != "1234") {
@@ -109,5 +109,4 @@ fun LoginScreenPreview() {
     CarteirinhaDigitalTheme() {
       //  LoginScreen()
     }
-
 }
