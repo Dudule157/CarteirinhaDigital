@@ -1,6 +1,5 @@
-package com.senai.carteirinhadigital.feature.auth.presentation
+package com.senai.carteirinhadigital.feature.auth.presentation.screen
 
-import android.R.attr.label
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
