@@ -5,62 +5,94 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.senai.carteirinhadigital.app.navigation.Routes
+import com.senai.carteirinhadigital.feature.auth.domain.model.UsuarioLogado
+import com.senai.carteirinhadigital.feature.home.presentation.component.BotaoNavegacao
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    navController: NavController = NavController(
+        LocalContext.current
+    ),
     modifier: Modifier = Modifier,
+    usuarioLogado: UsuarioLogado
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(24.dp),
-
-        verticalArrangement = Arrangement.Center,
+        modifier = modifier,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
-            text = "Seja bem-vindo!",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary
+            text = "Aluno",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = usuarioLogado.nome,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = usuarioLogado.curso,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = usuarioLogado.turma,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
         )
 
-        Text(
-            text = "Carteirinha Digital",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-
-        Text(
-            text = "Selecione uma opção",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-
-        Button(
-            onClick = { navController.navigate(Routes.Carteirinha) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Carteirinha")
-        }
-
-        Button(
-            onClick = { navController.navigate(Routes.UnidadeCurricular) },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Unidade Curricular")
+            BotaoNavegacao(
+                "Carteirinha",
+                {
+                    navController.navigate(Routes.Carteirinha.route)
+                },
+                modifier = Modifier.fillMaxWidth(.7f)
+            )
+            BotaoNavegacao(
+                "Unidades Curriculares",
+                {
+                    navController.navigate(Routes.UCAluno.route)
+                },
+                modifier = Modifier.fillMaxWidth(.7f)
+            )
         }
     }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(
+        modifier = Modifier
+            .padding(20.dp)
+            .fillMaxSize(),
+        usuarioLogado = UsuarioLogado(
+            id="1",
+            nome = "Rafael Costa",
+            curso="Desenvolvimento de Sistemas",
+            turma = "2DEVEST-A",
+            token = "jhhhhhhh"
+        )
+    )
 }

@@ -25,8 +25,9 @@ import com.senai.carteirinhadigital.R
 import com.senai.carteirinhadigital.core.designsystem.theme.CarteirinhaDigitalTheme
 
 @Composable
-fun CarteirinhaScreen(modifier: Modifier = Modifier,
-                      onBackClick: () -> Unit) {
+fun CarteirinhaScreen(
+    modifier: Modifier = Modifier
+) {
     Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,

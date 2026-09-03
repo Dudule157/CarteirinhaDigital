@@ -1,39 +1,72 @@
 package com.senai.carteirinhadigital.app.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import com.senai.carteirinhadigital.feature.auth.navigation.authScreen
-import com.senai.carteirinhadigital.feature.carteirinha.navigation.carteirinhaScreen
-import com.senai.carteirinhadigital.feature.home.presentation.navigation.homeScreen
-import com.senai.carteirinhadigital.feature.unidadecurricular.navigation.unidadeCurricularScreen
+import androidx.navigation.compose.composable
+import com.senai.carteirinhadigital.app.session.SessionViewModel
+import com.senai.carteirinhadigital.feature.auth.presentation.screen.LoginScreen
+import com.senai.carteirinhadigital.feature.carteirinha.presentation.CarteirinhaScreen
+import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeScreen
+import com.senai.carteirinhadigital.feature.unidadecurricular.presentation.screen.UnidadeCurricularScreen
 
 @Composable
-fun AppNavHost() {
-    val navController = rememberNavController()
-
+fun AppNavHost(
+    navController: NavHostController,
+    sessionViewModel: SessionViewModel = viewModel()
+) {
+    val usuarioLogado by sessionViewModel.usuarioLogado.collectAsStateWithLifecycle()
     NavHost(
         navController = navController,
-        startDestination = Routes.Login
+        startDestination = Routes.Login.route
     ) {
-        authScreen(
-            navController
-        )
-
-        carteirinhaScreen(
-            onNavigateToLogin = {
-                navController.navigate(Routes.Login)
+        composable(Routes.Login.route) {
+            LoginScreen(
+                onLoginSucesso = {
+                        usuario ->
+                    sessionViewModel.setUsuarioLogado(usuario)
+                    navController.navigate(Routes.HomeAluno.route)
+                }
+            )
+        }
+        composable(Routes.Carteirinha.route) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                CarteirinhaScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
-        )
-
-        homeScreen(
-            navController
-        )
-
-        unidadeCurricularScreen(
-            onNavigateToLogin = {
-                navController.navigate(Routes.Login)
+        }
+        composable(Routes.HomeAluno.route) {
+            val usuario = usuarioLogado
+            if(usuario == null){
+                LaunchedEffect(Unit) {
+                    navController.navigate((Routes.Login.route))
+                }
+            }else {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    HomeScreen(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding),
+                        usuarioLogado = usuario
+                    )
+                }
             }
-        )
+        }
+        composable(Routes.UCAluno.route) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                UnidadeCurricularScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+        }
     }
 }
