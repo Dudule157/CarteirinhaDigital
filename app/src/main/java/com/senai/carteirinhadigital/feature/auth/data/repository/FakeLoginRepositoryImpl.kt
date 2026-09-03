@@ -18,7 +18,7 @@ class FakeLoginRepositoryImpl : LoginRepository {
                     nome = "José Gay",
                     curso = "Desenvolvimento de Sistemas",
                     turma = "2DEVEST-A",
-                    token = "token-fake-vindo-do sistema"
+                    token = "token-fake-vindo-do sistema",
                 )
             )
         } else {
