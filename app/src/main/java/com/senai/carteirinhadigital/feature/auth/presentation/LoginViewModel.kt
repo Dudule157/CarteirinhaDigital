@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.senai.carteirinhadigital.feature.auth.data.repository.FakeLoginRepositoryImpl
 import com.senai.carteirinhadigital.feature.auth.data.repository.LoginRepository
+import com.senai.carteirinhadigital.feature.auth.data.repository.LoginRepositoryProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,24 +13,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: LoginRepository = FakeLoginRepositoryImpl()
+    private val repository: LoginRepository = LoginRepositoryProvider.provide()
 ) : ViewModel() {
-
-
-
-
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-
-
-
-
     fun onEvent(event: LoginEvent) {
         when (event) {
-
-
-
-
             is LoginEvent.OnUsuarioChange -> {
                 _uiState.update { state ->
                     state.copy(
@@ -38,10 +27,6 @@ class LoginViewModel(
                     )
                 }
             }
-
-
-
-
             is LoginEvent.OnSenhaChange -> {
                 _uiState.update { state ->
                     state.copy(
@@ -50,17 +35,9 @@ class LoginViewModel(
                     )
                 }
             }
-
-
-
-
             LoginEvent.OnEntrarClick -> {
                 fazerLogin()
             }
-
-
-
-
             LoginEvent.OnNavegacaoRealizada -> {
                 _uiState.update { state ->
                     state.copy(
@@ -70,16 +47,8 @@ class LoginViewModel(
             }
         }
     }
-
-
-
-
     private fun fazerLogin() {
         val state = _uiState.value
-
-
-
-
         if (state.usuario.isBlank() || state.senha.isBlank()) {
             _uiState.update {
                 it.copy(
@@ -88,15 +57,7 @@ class LoginViewModel(
             }
             return
         }
-
-
-
-
         viewModelScope.launch {
-
-
-
-
             _uiState.update {
                 it.copy(
                     isLoading = true,
@@ -104,18 +65,10 @@ class LoginViewModel(
                     usuarioLogado = null
                 )
             }
-
-
-
-
             val result = repository.login(
                 usuario = state.usuario.trim(),
                 senha = state.senha.trim()
             )
-
-
-
-
             result.fold(
                 onSuccess = { usuarioLogado ->
                     _uiState.update {
@@ -126,10 +79,6 @@ class LoginViewModel(
                         )
                     }
                 },
-
-
-
-
                 onFailure = { exception ->
                     _uiState.update {
                         it.copy(
@@ -144,4 +93,3 @@ class LoginViewModel(
         }
     }
 }
-
