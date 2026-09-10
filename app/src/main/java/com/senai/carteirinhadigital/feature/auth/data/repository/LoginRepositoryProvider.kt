@@ -5,7 +5,7 @@ import com.senai.carteirinhadigital.feature.auth.data.remote.network.NetworkFact
 object LoginRepositoryProvider {
     private const val USE_FAKE_REPOSITORY = false
 
-    fun provide(): LoginRepository {
+    fun provide(): LoginRepository { 
         return if (USE_FAKE_REPOSITORY) {
             FakeLoginRepositoryImpl()
         } else {
