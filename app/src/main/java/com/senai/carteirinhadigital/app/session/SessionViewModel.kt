@@ -6,15 +6,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class SessionViewModel: ViewModel(){
+class SessionViewModel: ViewModel() {
     private val _usuarioLogado = MutableStateFlow<UsuarioLogado?>(null)
     val usuarioLogado: StateFlow<UsuarioLogado?> = _usuarioLogado.asStateFlow()
 
     fun setUsuarioLogado(usuario: UsuarioLogado){
-        _usuarioLogado.value=usuario
+        _usuarioLogado.value = usuario
     }
-
-    fun limparUsuarioLogado(){
-        _usuarioLogado.value=null
+    fun limparSession(){
+        _usuarioLogado.value = null
     }
 }

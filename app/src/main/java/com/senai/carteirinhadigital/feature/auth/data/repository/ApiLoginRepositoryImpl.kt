@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 import retrofit2.HttpException
 import java.io.IOException
 
-class ApiAuthRepositoryImpl(
+class ApiLoginRepositoryImpl(
     private val api: AuthApi
 ) : LoginRepository {
 

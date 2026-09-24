@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.senai.carteirinhadigital.app.navigation.Routes
-import com.senai.carteirinhadigital.feature.auth.domain.model.UsuarioLogado
 import com.senai.carteirinhadigital.feature.home.presentation.component.BotaoNavegacao
 
 @Composable
@@ -24,8 +23,7 @@ fun HomeScreen(
     navController: NavController = NavController(
         LocalContext.current
     ),
-    modifier: Modifier = Modifier,
-    usuarioLogado: UsuarioLogado
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
@@ -35,21 +33,6 @@ fun HomeScreen(
         Text(
             text = "Aluno",
             fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = usuarioLogado.nome,
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = usuarioLogado.curso,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = usuarioLogado.turma,
-            fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -86,13 +69,6 @@ fun HomeScreenPreview() {
     HomeScreen(
         modifier = Modifier
             .padding(20.dp)
-            .fillMaxSize(),
-        usuarioLogado = UsuarioLogado(
-            id="1",
-            nome = "Rafael Costa",
-            curso="Desenvolvimento de Sistemas",
-            turma = "2DEVEST-A",
-            token = "jhhhhhhh"
-        )
+            .fillMaxSize()
     )
 }

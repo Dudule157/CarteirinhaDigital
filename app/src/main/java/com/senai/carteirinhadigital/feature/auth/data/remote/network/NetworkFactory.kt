@@ -1,6 +1,5 @@
 package com.senai.carteirinhadigital.feature.auth.data.remote.network
 
-import android.R.attr.level
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.senai.carteirinhadigital.feature.auth.data.remote.service.AuthApi
 import kotlinx.serialization.json.Json

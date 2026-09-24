@@ -13,15 +13,17 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val repository: LoginRepository = LoginRepositoryProvider.provide()
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(LoginUiState())
-    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
+
+    private val _uiState = MutableStateFlow(LoginUIState())
+    val uiState: StateFlow<LoginUIState> = _uiState.asStateFlow()
+
     fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.OnUsuarioChange -> {
                 _uiState.update { state ->
                     state.copy(
                         usuario = event.value,
-                        errorMessage = null
+                        erroMessage = null
                     )
                 }
             }
@@ -29,65 +31,67 @@ class LoginViewModel(
                 _uiState.update { state ->
                     state.copy(
                         senha = event.value,
-                        errorMessage = null
+                        erroMessage = null
                     )
                 }
             }
-            LoginEvent.OnEntrarClick -> {
-                fazerLogin()
-            }
             LoginEvent.OnNavegacaoRealizada -> {
-                _uiState.update { state ->
-                    state.copy(
+                _uiState.update {
+                    it.copy(
                         usuarioLogado = null
                     )
                 }
             }
+
+            LoginEvent.OnEntrarClick -> fazerLogin()
         }
     }
+
     private fun fazerLogin() {
         val state = _uiState.value
-        if (state.usuario.isBlank() || state.senha.isBlank()) {
+
+        if(state.usuario.isBlank() || state.senha.isBlank()){
             _uiState.update {
                 it.copy(
-                    errorMessage = "Preencha login e senha"
+                    erroMessage = "Preencha login e senha"
                 )
             }
             return
         }
+
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
                     isLoading = true,
-                    errorMessage = null,
+                    erroMessage = null,
                     usuarioLogado = null
                 )
             }
             val result = repository.login(
-                usuario = state.usuario.trim(),
-                senha = state.senha.trim()
+                state.usuario.trim(),
+                state.senha.trim()
             )
-            result.fold(
-                onSuccess = { usuarioLogado ->
+
+            result
+                .onSuccess { usuarioLogado ->
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            usuarioLogado = usuarioLogado,
-                            errorMessage = null
-                        )
-                    }
-                },
-                onFailure = { exception ->
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            usuarioLogado = null,
-                            errorMessage = exception.message
-                                ?: "Erro ao Fazer Login"
+                            erroMessage = null,
+                            usuarioLogado = usuarioLogado
                         )
                     }
                 }
-            )
+                .onFailure { throwable ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            erroMessage = throwable.message ?: "Erro ao fazer Login"
+                        )
+                    }
+                }
         }
     }
+
+
 }
