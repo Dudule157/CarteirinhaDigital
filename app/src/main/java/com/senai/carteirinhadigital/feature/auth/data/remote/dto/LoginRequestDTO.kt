@@ -1,4 +1,4 @@
-package com.senai.carteirinhadigital.feature.auth.data.remote.dto
+ package com.senai.carteirinhadigital.feature.auth.data.remote.dto
 
 import kotlinx.serialization.Serializable
 

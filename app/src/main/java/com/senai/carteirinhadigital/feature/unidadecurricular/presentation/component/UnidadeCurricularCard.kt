@@ -34,7 +34,7 @@ fun UnidadeCurricularCard(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Professor: ${unidadeCurricular.professor}",
+                text = "Professor : ${unidadeCurricular.professor}",
                 style = MaterialTheme.typography.bodyMedium
             )
             Row(
