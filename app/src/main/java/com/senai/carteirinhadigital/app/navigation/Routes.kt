@@ -1,12 +1,8 @@
 package com.senai.carteirinhadigital.app.navigation
 
-import com.senai.carteirinhadigital.feature.unidadecurricular.domain.model.UnidadeCurricular
-
-
 import kotlinx.serialization.Serializable
 
 sealed class Routes (val route: String){
-
 
     data object Login : Routes("login")
 

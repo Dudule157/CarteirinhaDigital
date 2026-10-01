@@ -1,29 +1,30 @@
 package com.senai.carteirinhadigital.feature.auth.data.repository
 
 import com.senai.carteirinhadigital.feature.auth.domain.model.UsuarioLogado
+import com.senai.carteirinhadigital.feature.auth.domain.repository.LoginRepository
 import kotlinx.coroutines.delay
 
-class FakeLoginRepositoryImpl : LoginRepository {
+class FakeAuthRepository : LoginRepository {
+    override suspend fun login(
+        login: String,
+        senha: String
+    ): Result<UsuarioLogado> {
 
-    override suspend fun login(usuario: String, senha: String)
-            : Result<UsuarioLogado> {
         delay(1500)
-        return if(usuario.equals("aluno") && senha.equals("123")){
+
+        return if (login.equals("aluno", ignoreCase = true) && senha == "123") {
             Result.success(
                 UsuarioLogado(
-                    id="1",
-                    nome = "Eduardo",
-                    curso = "Desenvolvimento de Sistema",
-                    turma = "2DEVEST-B",
+                    id = "1",
+                    nome = "Rafael Costa",
+                    matricula = "2026000001",
+                    curso = "Desenvolvimento de Sistemas",
+                    turma = "2DEVEST-A",
                     token = "token-fake-para-aula"
                 )
             )
-        }else{
-            Result.failure(
-                IllegalArgumentException(
-                    "Login ou senha inválidos"
-                )
-            )
+        } else {
+            Result.failure(IllegalArgumentException("Login ou senha inválidos"))
         }
     }
 }
