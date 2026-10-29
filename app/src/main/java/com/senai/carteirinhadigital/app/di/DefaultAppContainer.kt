@@ -9,34 +9,42 @@ import com.senai.carteirinhadigital.feature.auth.domain.repository.LoginReposito
 import com.senai.carteirinhadigital.feature.aluno.unidadecurricular.data.remote.service.UnidadeCurricularApi
 import com.senai.carteirinhadigital.feature.aluno.unidadecurricular.data.repository.ApiUnidadeCurricularRepositoryImpl
 import com.senai.carteirinhadigital.feature.aluno.unidadecurricular.domain.repository.UnidadeCurricularRepository
+import com.senai.carteirinhadigital.feature.professor.turmas.data.remote.service.TurmaProfessorApi
+import com.senai.carteirinhadigital.feature.professor.turmas.data.repository.ApiTurmaProfessorRepositoryImpl
+import com.senai.carteirinhadigital.feature.professor.turmas.domain.repository.TurmaProfessorRepository
+import com.senai.carteirinhadigital.feature.professor.unidadecurricular.data.remote.service.UnidadeCurricularProfessorApi
+import com.senai.carteirinhadigital.feature.professor.unidadecurricular.data.repository.ApiUnidadeCurricularProfessorRepositoryImpl
+import com.senai.carteirinhadigital.feature.professor.unidadecurricular.domain.repository.UnidadeCurricularProfessorRepository
 import kotlin.jvm.java
 
 class DefaultAppContainer : AppContainer {
     override val sessionTokenStore: SessionTokenStore = SessionTokenStore()
-    private val networkClient = NetworkClient(
-        baseUrl = BASE_URL,
-        sessionTokenStore = sessionTokenStore
-    )
+    private val networkClient = NetworkClient(BASE_URL, sessionTokenStore)
 
     private val authApi: AuthApi by lazy {
         networkClient.createPublic(AuthApi::class.java)
     }
-
-    private val unidadeCurricularApi: com.senai.carteirinhadigital.feature.aluno.unidadecurricular.data.remote.service.UnidadeCurricularApi by lazy {
-        networkClient.createAuthenticated(_root_ide_package_.com.senai.carteirinhadigital.feature.aluno.unidadecurricular.data.remote.service.UnidadeCurricularApi::class.java)
+    private val unidadeCurricularApi: UnidadeCurricularApi by lazy {
+        networkClient.createAuthenticated(UnidadeCurricularApi::class.java)
+    }
+    private val turmaProfessorApi: TurmaProfessorApi by lazy {
+        networkClient.createAuthenticated(TurmaProfessorApi::class.java)
+    }
+    private val unidadeCurricularProfessorApi: UnidadeCurricularProfessorApi by lazy {
+        networkClient.createAuthenticated(UnidadeCurricularProfessorApi::class.java)
     }
 
     override val loginRepository: LoginRepository by lazy {
-        if (USE_FAKE_LOGIN_REPOSITORY) {
-            FakeAuthRepository()
-        } else {
-            ApiLoginRepositoryImpl(api = authApi)
-        }
+        if (USE_FAKE_LOGIN_REPOSITORY) FakeAuthRepository() else ApiLoginRepositoryImpl(api = authApi)
     }
-    override val unidadeCurricularRepository: com.senai.carteirinhadigital.feature.aluno.unidadecurricular.domain.repository.UnidadeCurricularRepository by lazy {
-        _root_ide_package_.com.senai.carteirinhadigital.feature.aluno.unidadecurricular.data.repository.ApiUnidadeCurricularRepositoryImpl(
-            api = unidadeCurricularApi
-        )
+    override val unidadeCurricularRepository: UnidadeCurricularRepository by lazy {
+        ApiUnidadeCurricularRepositoryImpl(api = unidadeCurricularApi)
+    }
+    override val turmaProfessorRepository: TurmaProfessorRepository by lazy {
+        ApiTurmaProfessorRepositoryImpl(api = turmaProfessorApi)
+    }
+    override val unidadeCurricularProfessorRepository: UnidadeCurricularProfessorRepository by lazy {
+        ApiUnidadeCurricularProfessorRepositoryImpl(api = unidadeCurricularProfessorApi)
     }
 
     companion object {
