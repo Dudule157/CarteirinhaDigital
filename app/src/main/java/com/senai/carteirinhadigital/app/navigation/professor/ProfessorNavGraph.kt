@@ -18,6 +18,7 @@ import com.senai.carteirinhadigital.feature.professor.home.presentation.screen.H
 import com.senai.carteirinhadigital.feature.professor.turmas.domain.repository.TurmaProfessorRepository
 import com.senai.carteirinhadigital.feature.professor.turmas.presentation.factory.TurmaProfessorViewModelFactory
 import com.senai.carteirinhadigital.feature.professor.turmas.presentation.TurmaProfessorViewModel
+import com.senai.carteirinhadigital.feature.professor.turmas.presentation.screen.TurmasProfessorScreen
 import com.senai.carteirinhadigital.feature.professor.unidadecurricular.domain.repository.UnidadeCurricularProfessorRepository
 import com.senai.carteirinhadigital.feature.professor.unidadecurricular.presentation.UnidadeCurricularProfessorViewModel
 import com.senai.carteirinhadigital.feature.professor.unidadecurricular.presentation.factory.UnidadeCurricularProfessorViewModelFactory

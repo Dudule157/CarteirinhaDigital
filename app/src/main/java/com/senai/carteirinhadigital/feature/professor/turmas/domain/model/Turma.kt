@@ -10,3 +10,4 @@ data class Turma(
     val horarioInicio: String,
     val horarioFim: String
 )
+
